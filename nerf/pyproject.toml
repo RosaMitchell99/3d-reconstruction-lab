@@ -1,0 +1,33 @@
+[project]
+name = "neural-rendering-lab"
+version = "0.1.0"
+description = "Reproducible NeRF and FastNeRF experiments"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "torch==2.7.1",
+    "numpy>=1.26,<3",
+    "imageio>=2.31,<3",
+]
+
+[dependency-groups]
+dietnerf = [
+    "open-clip-torch==2.32.0",
+    "scikit-image==0.25.2",
+    "lpips==0.1.4",
+]
+
+[tool.uv]
+package = false
+environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "sys_platform == 'win32' and platform_machine == 'AMD64'",
+]
+
+# Use the CUDA wheel explicitly; do not accidentally install a CPU-only build.
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
